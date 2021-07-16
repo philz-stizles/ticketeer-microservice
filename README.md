@@ -44,7 +44,13 @@
 
 - Overview:
   - It watches for orders to be created,
-  - It cancels them after 15 minutes expiration time
+  - It cancels orders after 15 minutes expiration time
+- Install dependencies
+  npm install bull @types/bull node-nats-streaming ts-node-dev @devdezyn/common typescript
+  npm install -D @types/jest jest ts-jest
+- Docker:
+  docker build -t philzstizles/expiration .
+  docker publish
 
 ### Payments Service
 

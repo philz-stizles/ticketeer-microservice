@@ -1,24 +1,26 @@
 import { Schema, Model, model, Document } from 'mongoose';
+import { OrderStatus } from '@devdezyn/common';
+import { TicketDocument } from './ticket';
 
 // Create an interface.
 interface OrderAttrs {
-  status: string;
+  status: OrderStatus;
   expiresAt: Date;
   userId: string;
-  ticket: TicketDoc;
+  ticket: TicketDocument;
+}
+
+// An interface that describes the properties that a Order Document has
+interface OrderDocument extends Document {
+  status: OrderStatus;
+  expiresAt: Date;
+  userId: string;
+  ticket: TicketDocument;
 }
 
 // An interface that describes the properties that a Order Model has
 interface OrderModel extends Model<OrderDocument> {
   build(attrs: OrderAttrs): OrderDocument;
-}
-
-// An interface that describes the properties that a Order Document has
-interface OrderDocument extends Document {
-  status: string;
-  expiresAt: Date;
-  userId: string;
-  ticket: TicketDoc;
 }
 
 // Put as much business logic in the models to keep the controllers as simple and lean as possible
@@ -27,19 +29,19 @@ const orderSchema = new Schema(
     status: {
       type: String,
       required: true,
-      enum: ['expires', 'paid', 'pending'],
+      enum: Object.values(OrderStatus),
+      default: OrderStatus.Created,
     },
     expiresAt: {
-      type: Date,
-      required: true,
+      type: Schema.Types.Date,
     },
     userId: {
       type: String,
       required: true,
     },
     ticket: {
-      type: String,
-      required: true,
+      type: Schema.Types.ObjectId,
+      ref: 'Ticket',
     },
   },
   {
@@ -59,4 +61,5 @@ orderSchema.statics.build = (attrs: OrderAttrs) => {
 // Create a Model.
 const Order = model<OrderDocument, OrderModel>('Order', orderSchema);
 
+export { OrderStatus };
 export default Order;
