@@ -1,6 +1,7 @@
 import request from 'supertest';
 import app from '../../app';
 import mongoose from 'mongoose';
+import Ticket from '../../models/ticket';
 import { natsWrapper } from '../../nats-wrapper';
 
 describe('Update ticket route', () => {
@@ -21,6 +22,30 @@ describe('Update ticket route', () => {
       .set('Cookie', global.signin())
       .send({ title: 'Test title', price: 20 })
       .expect(404);
+  });
+
+  it('rejects update if the ticket is reserved', async () => {
+    const cookie = global.signin();
+
+    // Create a Ticket
+    const createResponse = await request(app)
+      .post('/api/tickets')
+      .set('Cookie', cookie)
+      .send({ title: 'Test title', price: 50 });
+
+    // Find the created Ticket an set the orderId to reserve it
+    const existingTicket = await Ticket.findById(createResponse.body.id);
+    existingTicket!.set({
+      orderId: mongoose.Types.ObjectId().toHexString(),
+    });
+    await existingTicket!.save();
+
+    // Try to update the isReserved Ticket
+    await request(app)
+      .put(`/api/tickets/${createResponse.body.id}`)
+      .set('Cookie', cookie)
+      .send({ title: 'Updated test title', price: 100 })
+      .expect(400);
   });
 
   it('returns a 401 if the user does not own the ticket', async () => {

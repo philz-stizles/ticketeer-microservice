@@ -20,7 +20,7 @@ const Signup = () => {
   return (
     <form onSubmit={onSubmit}>
       <h1>Sign Up</h1>
-      <div className="form-group">
+      <div className="mb-3">
         <label htmlFor="email">Email Address</label>
         <input
           type="email"
@@ -31,7 +31,7 @@ const Signup = () => {
         />
       </div>
 
-      <div className="form-group">
+      <div className="mb-3">
         <label htmlFor="password">Password</label>
         <input
           type="password"

@@ -33,12 +33,30 @@
 
 ### Ticket Services - Ticket creation/editing. Knows whether a ticket can be updated
 
+- Overview:
+  - It is used to create, update, list tickets.
+- Events:
+  - Listeners:
+    order:create - It should reserve a ticket if a corresponding order has been created.
+    order:cancelled - It should unreserve a ticket if the corresponding order has been cancelled
+  - Publishers:
+    ticket:created
+    ticket:updated
+- Dependencies:
+  npm install mongoose-update-if-current
+
 ### Orders Service - Order creation/editing
 
 - Overview:
   - It keeps track of who is attempting to purchase a ticket at any given time.
   - It will have information to lock down the ticket and not allow anyone else
-    to purchase the ticket
+    to purchase the ticket.
+- Events:
+  - Listeners:
+    ticket:create - So that the order service knows the valid tickets that can be purchased.
+    The order service needs to know the price of each ticket
+- Dependencies:
+  npm install mongoose-update-if-current
 
 ### Expiration Services
 
@@ -58,6 +76,15 @@
   - It handles credit card payments.
   - It cancels orders if payments fails.
   - completes if payments succeeds.
+- Events:
+  - It listens/receives an event of order:created, this is so it knows how much money
+    it should be receiving
+  - It listens/receives an event of order:cancelled, this is so it knows how much money
+    it should be receiving.
+  - It emits a charge:created event
+- Docker
+  - Build image: docker build -t philzstizles/payments .
+  - Push image to docker hub: docker publish
 
 ## Events
 
@@ -87,6 +114,7 @@ Note: Whenever we delete or restart the pod running MongoDB, we will lose all of
   },
 - install axios: npm install axios
 - getServerSideProps
+- thisisonsafe
 
 ## Common
 

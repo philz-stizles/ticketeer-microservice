@@ -27,5 +27,6 @@ spec:
   ports:
     - name: db
       protocol: TCP
-      port: 6379 # could be any valid port, this is the Node Port Service's port
-      targetPort: 6379 # must be the port that the container is running on
+      port: 6379 # Service Pod PORT could be any valid PORT,
+      # recommended to match targetPort port
+      targetPort: 6379 # This is the default Redis/Container PORT

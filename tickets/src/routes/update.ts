@@ -29,26 +29,35 @@ router.put(
       throw new NotFoundError();
     }
 
+    if (existingTicket.orderId) {
+      throw new BadRequestError('You cannot edit a reserved Ticket');
+    }
+
     if (existingTicket.userId !== req.currentUser!.id) {
       throw new NotAuthorizedError();
     }
 
     const { title, price } = req.body;
 
-    if (existingTicket.title !== title) {
-      const duplicateTicket = await Ticket.findOne({ title });
-      if (duplicateTicket) {
-        throw new BadRequestError('Ticket with that title already exists');
-      }
-    }
+    // if (existingTicket.title !== title) {
+    //   const duplicateTicket = await Ticket.findOne({ title });
+    //   if (duplicateTicket) {
+    //     throw new BadRequestError('Ticket with that title already exists');
+    //   }
+    // }
 
     // const ticketUpdates = { price };
     // if (existingTicket.title !== title) {
     //   ticketUpdates.title = title;
     // }
 
+    // existingTicket.set({
+    //   title: existingTicket.title === title ? title : title,
+    //   price,
+    // });
+
     existingTicket.set({
-      title: existingTicket.title === title ? title : title,
+      title,
       price,
     });
 
@@ -59,6 +68,7 @@ router.put(
       title: existingTicket.title,
       price: existingTicket.price,
       userId: existingTicket.userId,
+      version: existingTicket.version,
     });
 
     res.send(existingTicket);

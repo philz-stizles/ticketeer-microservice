@@ -1,4 +1,5 @@
 import { Schema, Model, model, Document } from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { OrderStatus } from '@devdezyn/common';
 import { TicketDocument } from './ticket';
 
@@ -16,6 +17,7 @@ interface OrderDocument extends Document {
   expiresAt: Date;
   userId: string;
   ticket: TicketDocument;
+  version: number;
 }
 
 // An interface that describes the properties that a Order Model has
@@ -53,6 +55,18 @@ const orderSchema = new Schema(
     },
   }
 );
+
+orderSchema.set('versionKey', 'version');
+orderSchema.plugin(updateIfCurrentPlugin);
+
+// Without the mongoose-update-if-current
+// orderSchema.pre('save', function (done) {
+//   this.$where = {
+//     version: this.get('version') - 1,
+//   };
+
+//   done();
+// });
 
 orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order(attrs);

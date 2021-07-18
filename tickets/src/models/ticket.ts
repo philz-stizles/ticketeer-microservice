@@ -1,4 +1,5 @@
 import { Schema, Model, model, Document } from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 // Create an interface.
 interface TicketAttrs {
@@ -17,6 +18,8 @@ interface TicketDocument extends Document {
   title: string;
   price: number;
   userId: string;
+  version: number;
+  orderId?: string;
 }
 
 // Put as much business logic in the models to keep the controllers as simple and lean as possible
@@ -34,6 +37,9 @@ const ticketSchema = new Schema(
       type: String,
       required: true,
     },
+    orderId: {
+      type: String,
+    },
   },
   {
     toJSON: {
@@ -44,6 +50,9 @@ const ticketSchema = new Schema(
     },
   }
 );
+
+ticketSchema.set('versionKey', 'version');
+ticketSchema.plugin(updateIfCurrentPlugin);
 
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
   return new Ticket(attrs);

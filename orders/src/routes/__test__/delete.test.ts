@@ -31,6 +31,7 @@ describe('Cancel order route', () => {
   it("returns an error if a user tries to cancel another user's order", async () => {
     // Create a ticket
     const newTicket = Ticket.build({
+      id: mongoose.Types.ObjectId().toHexString(),
       title: 'New Ticket',
       price: 20,
     });
@@ -55,6 +56,7 @@ describe('Cancel order route', () => {
   it('marks an order as cancelled for a particular user', async () => {
     // Create a ticket
     const newTicket = Ticket.build({
+      id: mongoose.Types.ObjectId().toHexString(),
       title: 'New Ticket',
       price: 20,
     });
@@ -84,6 +86,7 @@ describe('Cancel order route', () => {
   it('publishes an order cancelled event', async () => {
     // Create a ticket
     const newTicket = Ticket.build({
+      id: mongoose.Types.ObjectId().toHexString(),
       title: 'New Ticket',
       price: 20,
     });
