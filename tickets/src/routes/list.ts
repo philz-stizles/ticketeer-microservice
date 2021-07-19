@@ -5,7 +5,8 @@ import Ticket from '../models/ticket';
 const router = express.Router();
 
 router.get('/api/tickets', async (req: Request, res: Response) => {
-  const tickets = await Ticket.find({});
+  // Only show tickets that have not been ordered for, or on which orders have been cancelled
+  const tickets = await Ticket.find({ orderId: undefined });
 
   res.send(tickets);
 });

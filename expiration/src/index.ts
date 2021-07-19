@@ -30,7 +30,7 @@ const start = async () => {
 
     new OrderCreatedListener(natsWrapper.client).listen();
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
   }
 };
 

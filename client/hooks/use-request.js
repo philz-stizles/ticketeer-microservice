@@ -5,12 +5,12 @@ const useRequest = ({ url, method, body, onSuccess }) => {
   const [loading, setLoading] = React.useState(false);
   const [errors, setErrors] = React.useState(null);
 
-  const doRequest = async () => {
+  const doRequest = async (bodyProps = {}) => {
     try {
       setLoading(true);
       setErrors(null);
 
-      const response = await axios[method](url, body);
+      const response = await axios[method](url, { ...body, ...bodyProps });
       // console.log(response.data);
       setLoading(false);
       if (onSuccess) {

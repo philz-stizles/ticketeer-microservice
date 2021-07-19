@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 const IndexPage = ({ currentUser, tickets }) => {
-  console.log(tickets);
+  // console.log(tickets);
   const renderTickets = (tickets) =>
     tickets.map(({ id, title, price }) => {
       return (
