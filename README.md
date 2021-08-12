@@ -157,3 +157,17 @@ Note: Whenever we delete or restart the pod running MongoDB, we will lose all of
 - Access a running pod in a strictly development setting
   - open separate terminal:
     > kubectl port-forward %nats-server-kubernetes-pod-name% %local-port%:%nats-server-pod-port%
+
+## Stripe
+
+- Configure Stripe:
+
+  - Signup & [https://dashboard.stripe.com/login](Sign in to Stripe)
+  - Retrieve secret key from Developers > API Key
+  - Create kubernetes secret: kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=secret_key_from_stripe_dashboard
+  - Configure Payment Service pod env
+
+- Configure Stripe on Client:
+- Configure Stripe on Server:
+  Overview:
+  Install package: npm install stripe

@@ -2,7 +2,6 @@ import request from 'supertest';
 import app from '../../app';
 import mongoose from 'mongoose';
 import Order from '../../models/order';
-import { natsWrapper } from '../../nats-wrapper';
 import { OrderStatus } from '@devdezyn/common';
 
 describe('Create payment route', () => {

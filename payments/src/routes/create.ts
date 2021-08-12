@@ -9,6 +9,7 @@ import {
   NotAuthorizedError,
 } from '@devdezyn/common';
 import Order from '../models/order';
+import { stripe } from './../stripe';
 
 const router = express.Router();
 
@@ -39,11 +40,17 @@ router.post(
       throw new BadRequestError('Order has been cancelled');
     }
 
-    // Update order status to completed
-    existingOrder.set({ status: OrderStatus.Complete });
-    await existingOrder.save();
+    // `source` is obtained with Stripe.js; see https://stripe.com/docs/payments/accept-a-payment-charges#web-create-token
+    const charge = await stripe.charges.create({
+      amount: existingOrder.price * 100,
+      currency: 'usd',
+      source: token,
+      description: 'Ticket purchase',
+    });
 
-    res.status(201).send(existingOrder);
+    console.log(charge);
+
+    res.status(201).send({ success: true });
   }
 );
 
