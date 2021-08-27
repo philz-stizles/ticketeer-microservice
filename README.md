@@ -1,5 +1,11 @@
 # TICKETEER
 
+## Overview
+
+- CICD pipeline: Github > Github Actions > Digital Ocean
+
+## Technologies
+
 ## Resources
 
 ## Services
@@ -198,11 +204,86 @@ Note: Whenever we delete or restart the pod running MongoDB, we will lose all of
 
   - Signup & [https://dashboard.stripe.com/login](Sign in to Stripe)
   - Retrieve secret key from Developers > API Key
-  - Create kubernetes secret: kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=secret_key_from_stripe_dashboard
+  - Create kubernetes secret:
+
+    ```bash
+    kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=secret_key_from_stripe_dashboard
+    ```
+
   - Configure Payment Service pod env
 
 - Configure Stripe on Client:
 - Configure Stripe on Server:
   Overview:
   Install package: npm install stripe
-# ticketeer-microservice
+
+## Deployment
+
+- Options:
+  Digital Ocean Deploy[$40/month]
+  AWS[$126/month]
+  Google Cloud Platform[$113/month]
+  Azure[$72/month]
+- Digital Ocean Deployment:
+
+  - Configure Digital Ocean:
+  - Install Digital Ocean CLI:
+
+    ```txt
+    Kubernetes > Install management tools
+    ```
+
+    [https://github.com/digitalocean/doctl](Doctl Installation Docs)
+
+    - [https://github.com/digitalocean/doctl/releases](Download doctl zip)
+    - Extract to folder 'DigitalOcean' and add to PATH 'C:\DigitalOcean'
+
+  - Authenticate with Digital Ocean Account:
+
+    ```txt
+    API > Generate New Token > copy token
+    ```
+
+    ```bash
+    > doctl auth init
+    Enter your access token: <access token> + Enter
+    ```
+
+  - Get connection info for digital ocean cluster:
+
+    ```bash
+    doctl kubernetes clusters kubeconfig save <cluster name>
+    ```
+
+  - List all contexts:
+
+    ```bash
+    kubectl config view
+    ```
+
+  - Use a different context:
+
+    ```bash
+    kubectl config use-context <context name>
+    ```
+
+  - List nodes:
+
+    ```bash
+    kubectl get nodes
+    ```
+
+  - Create digital ocean secrets:
+
+    ```bash
+    kubectl config use-context <context name>
+
+    ```
+
+  - Configure Ingress-nginx: [https://kubernetes.github.io/ingress-nginx/deploy/#digital-ocean](Installation Guide)
+
+    ```bash
+      kubectl config view
+      kubectl config use-context <digital ocean context>
+      kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/do/deploy.yaml
+    ```
