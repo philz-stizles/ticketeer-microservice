@@ -1,9 +1,9 @@
-import React from 'react';
-import Link from 'next/link';
+import React from 'react'
+import Link from 'next/link'
 
 const IndexPage = ({ currentUser, tickets }) => {
-  // console.log(tickets);
-  const renderTickets = (tickets) =>
+  console.log(tickets)
+  const renderTickets = tickets =>
     tickets.map(({ id, title, price }) => {
       return (
         <tr key={id}>
@@ -15,8 +15,8 @@ const IndexPage = ({ currentUser, tickets }) => {
             </Link>
           </td>
         </tr>
-      );
-    });
+      )
+    })
 
   return (
     <div>
@@ -32,15 +32,15 @@ const IndexPage = ({ currentUser, tickets }) => {
         <tbody>{renderTickets(tickets)}</tbody>
       </table>
     </div>
-  );
-};
+  )
+}
 
 IndexPage.getInitialProps = async (ctx, client, currentUser) => {
-  const { data } = await client.get('/api/tickets');
+  const { data } = await client.get('/api/tickets')
 
   return {
     tickets: data,
-  };
-};
+  }
+}
 
-export default IndexPage;
+export default IndexPage
