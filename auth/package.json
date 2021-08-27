@@ -19,7 +19,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@devdezyn/common": "^1.0.3",
+    "@devdezyn/common": "^1.0.18",
     "@types/cookie-session": "^2.0.43",
     "@types/express": "^4.17.12",
     "@types/jsonwebtoken": "^8.5.4",
