@@ -1,11 +1,9 @@
 import request from 'supertest'
 import app from '../../app'
-import { signin } from '../../test/setup'
 
 describe('Current user route', () => {
   it('responds with details about the current user', async () => {
-    const cookie = await signin()
-    // const cookie = await global.signin()
+    const cookie = await global.signin()
 
     const response = await request(app)
       .get('/api/users/currentuser')
