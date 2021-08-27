@@ -38,7 +38,7 @@ afterAll(async () => {
   await mongoose.connection.close()
 })
 
-export const signin = async () => {
+global.signin = async () => {
   const email = 'test@test.com'
   const password = 'password'
 
@@ -53,19 +53,3 @@ export const signin = async () => {
   const cookie = response.get('Set-Cookie')
   return cookie
 }
-
-// global.signin = async () => {
-//   const email = 'test@test.com'
-//   const password = 'password'
-
-//   const response = await request(app)
-//     .post('/api/users/signup')
-//     .send({
-//       email,
-//       password,
-//     })
-//     .expect(201)
-
-//   const cookie = response.get('Set-Cookie')
-//   return cookie
-// }

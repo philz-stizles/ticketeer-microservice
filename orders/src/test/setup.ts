@@ -65,29 +65,3 @@ global.signin = () => {
   // return a string that is the cookie with the encoded data.
   return [`express:sess=${base64}`]
 }
-
-// global.signin = () => {
-//   // Generate user id
-//   const id = new mongoose.Types.ObjectId().toHexString()
-
-//   // Build a JWT payload. { id, email }
-//   const payload = {
-//     id,
-//     email: 'test@test.com',
-//   }
-
-//   // Create the JWT.
-//   const token = jwt.sign(payload, process.env.JWT_KEY!)
-
-//   // Build session Object.
-//   const session = { jwt: token }
-
-//   // Turn the session into JSON.
-//   const sessionJSON = JSON.stringify(session)
-
-//   // Encode JSON in base64.
-//   const base64 = Buffer.from(sessionJSON).toString('base64')
-
-//   // return a string that is the cookie with the encoded data.
-//   return [`express:sess=${base64}`]
-// }
