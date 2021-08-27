@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import app from './app'
 
 const start = async () => {
-  console.log('test digital ocean deploy')
+  console.log('auth')
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY must be defined')
   }
