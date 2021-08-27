@@ -79,12 +79,46 @@
 - Events:
   - It listens/receives an event of order:created, this is so it knows how much money
     it should be receiving
-  - It listens/receives an event of order:cancelled, this is so it knows how much money
-    it should be receiving.
-  - It emits a charge:created event
+  - It listens/receives an event of order:cancelled, this is so it knows that any incoming payments for this order should be rejected.
+  - It emits a charge:created event as the order service needs to know that an order has been paid for.
 - Docker
   - Build image: docker build -t philzstizles/payments .
   - Push image to docker hub: docker publish
+- Creating a stripe secret:
+
+  ```bash
+    kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=<stripe secret>
+  ```
+
+- Creating a stripe env variable:
+
+  ```yaml
+  env:
+    - name: STRIPE_KEY
+      valueFrom:
+        secretKeyRef:
+          name: stripe-secret
+          key: STRIPE_KEY
+  ```
+
+## Leveraging a Cloud Environment for Development
+
+- [https://cloud.google.com/sdk/docs/quickstart](Google Cloud SDK)
+- Select Getting started with Cloud SDK > Windows
+- cmd > gcloud
+- gcloud auth login
+- gcloud init
+- Installing the GCloud Context:
+
+  ```bash
+  gcloud container clusters get-credentials <cluster name>
+  ```
+
+- Enable Google Cloud Build:
+- Update 'skaffold.yaml' file:
+- Setup ingress-nginx on google cloud cluster
+- update hosts file to point to remote cluster
+- Restart Skaffold
 
 ## Events
 

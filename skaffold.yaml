@@ -7,7 +7,10 @@ deploy:
 build:
   local:
     push: false
+  # googleCloudBuild:
+  #   projectId: ticketeer-324120
   artifacts:
+    # - image: us.gcr.io/ticketeer-324120/auth
     - image: philzstizles/auth
       context: auth
       docker:
