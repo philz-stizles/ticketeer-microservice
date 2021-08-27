@@ -4,10 +4,11 @@ name: tests-auth
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
+  # Triggers the workflow on push or pull request events but only for any changes to auth folder/service
   pull_request:
-    branches: [ main ]
-    
+    paths:
+      - 'auth/**'
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -23,4 +24,3 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: cd auth && npm install && npm run test:ci
-        
